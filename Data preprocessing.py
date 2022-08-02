@@ -3,11 +3,10 @@ import pandas as pd
 import re
 import string
 
-import nltk
-from nltk import sent_tokenize, word_tokenize
+from nltk import word_tokenize
 from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer, WordNetLemmatizer
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from nltk.stem import PorterStemmer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 import pickle
@@ -46,7 +45,9 @@ def textPorterStemmer(text):
 
 
 def full_preprocessing():
-    df = pd.read_csv("datasets/newdf.csv")
+    col = ['id', 'product_category_id', 'name', 'description', 'brand', 'Model']
+    df = pd.read_csv("Model And New dataset/products_product.csv", usecols=col)
+    df = df[col]
     df[['name', 'description', 'brand', 'Model']] = df[['name', 'description', 'brand', 'Model']].applymap(
         func=lambda x: x.lower())
     df['description'] = df['description'].apply(func=simplePreprocessing)
